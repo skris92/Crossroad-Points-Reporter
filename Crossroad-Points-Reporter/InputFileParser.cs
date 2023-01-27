@@ -20,11 +20,6 @@
 
             List<VentLine> filteredVentLines = FilterVentLinesByDirection(ventLines);
 
-            foreach (VentLine ventLine in filteredVentLines)
-            {
-                Console.WriteLine($"{ventLine.StartCoords.X},{ventLine.StartCoords.Y} -> {ventLine.EndCoords.X},{ventLine.EndCoords.Y}");
-            }
-
             return filteredVentLines;
         }
 
@@ -58,6 +53,7 @@
 
         private bool CheckInputFileLinesFormat(List<string> lines)
         {
+            // Checking input format before any conversions
             foreach (string line in lines)
             {
                 try
@@ -83,23 +79,6 @@
             return true;
         }
 
-        private List<VentLine> FilterVentLinesByDirection(List<VentLine> ventLines)
-        {
-            List<VentLine> filteredVentLines = new List<VentLine>();
-
-            foreach (VentLine vl in ventLines)
-            {
-                if (vl.StartCoords.X == vl.EndCoords.X && vl.StartCoords.Y != vl.EndCoords.Y || // vertical
-                    vl.StartCoords.Y == vl.EndCoords.Y && vl.StartCoords.X != vl.EndCoords.X || // horizontal
-                    Math.Abs(vl.StartCoords.X - vl.EndCoords.X) == Math.Abs(vl.StartCoords.Y - vl.EndCoords.Y)) // diagonal
-                {
-                    filteredVentLines.Add(vl);
-                }
-            }
-
-            return filteredVentLines;
-        }
-
         private List<VentLine> ConvertLinesToVentLines(List<string> filteredInputLines)
         {
             List<VentLine> outputVentLines = new List<VentLine>();
@@ -122,6 +101,23 @@
             }
 
             return outputVentLines;
+        }
+
+        private List<VentLine> FilterVentLinesByDirection(List<VentLine> ventLines)
+        {
+            List<VentLine> filteredVentLines = new List<VentLine>();
+
+            foreach (VentLine vl in ventLines)
+            {
+                if (vl.StartCoords.X == vl.EndCoords.X && vl.StartCoords.Y != vl.EndCoords.Y || // vertical
+                    vl.StartCoords.Y == vl.EndCoords.Y && vl.StartCoords.X != vl.EndCoords.X || // horizontal
+                    Math.Abs(vl.StartCoords.X - vl.EndCoords.X) == Math.Abs(vl.StartCoords.Y - vl.EndCoords.Y)) // diagonal
+                {
+                    filteredVentLines.Add(vl);
+                }
+            }
+
+            return filteredVentLines;
         }
 
         private void ClearConsole()
