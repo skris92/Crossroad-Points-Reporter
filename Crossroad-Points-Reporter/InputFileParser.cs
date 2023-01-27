@@ -33,6 +33,7 @@
             Console.WriteLine("Enter file path: ");
             string? path = Console.ReadLine();
 
+            // Asking for input until a proper path with proper file extension added
             while (path == null || path == "" || CheckFileExtension(path) == false)
             {
                 ClearConsole();
@@ -105,6 +106,7 @@
 
             foreach (string line in filteredInputLines)
             {
+                // Converting string numbers to integers
                 int startCoordX = int.Parse(line.Split(" -> ")[0].Split(',')[0]);
                 int startCoordY = int.Parse(line.Split(" -> ")[0].Split(',')[1]);
 
