@@ -2,9 +2,6 @@
 {
     public class InputFileParser
     {
-        private List<VentLine> _ventLines = new();
-        private List<string> _filteredInputLines = new();
-
         public List<VentLine> GetVentLines()
         {
             bool correctLinesFormat = false;
@@ -16,19 +13,19 @@
 
                 inputFileLines = GetInputFileLines(path);
 
-                correctLinesFormat = CheckLinesFormat(inputFileLines);
+                correctLinesFormat = CheckInputFileLinesFormat(inputFileLines);
             }
 
-            FilterLinesByDirection(inputFileLines);
+            List<VentLine> ventLines = ConvertLinesToVentLines(inputFileLines);
 
-            _ventLines = ConvertLinesToVentLines(_filteredInputLines);
+            List<VentLine> filteredVentLines = FilterVentLinesByDirection(ventLines);
 
-            foreach (VentLine ventLine in _ventLines)
+            foreach (VentLine ventLine in filteredVentLines)
             {
                 Console.WriteLine($"{ventLine.StartCoords.X},{ventLine.StartCoords.Y} -> {ventLine.EndCoords.X},{ventLine.EndCoords.Y}");
             }
 
-            return _ventLines;
+            return filteredVentLines;
         }
 
         private string GetFilePath()
@@ -58,7 +55,7 @@
             return File.ReadAllLines(path).ToList();
         }
 
-        private bool CheckLinesFormat(List<string> lines)
+        private bool CheckInputFileLinesFormat(List<string> lines)
         {
             foreach (string line in lines)
             {
@@ -72,8 +69,7 @@
                         !endCoords[0].All(char.IsDigit) ||
                         !endCoords[1].All(char.IsDigit))
                     {
-                        Console.WriteLine("Input data is not in correct format!");
-                        return false;
+                        throw new Exception();
                     }
                 }
                 catch (Exception)
@@ -86,29 +82,21 @@
             return true;
         }
 
-        private bool CheckLineDirection(string line)
+        private List<VentLine> FilterVentLinesByDirection(List<VentLine> ventLines)
         {
-            int startCoordX = int.Parse(line.Split(" -> ")[0].Split(',')[0]);
-            int startCoordY = int.Parse(line.Split(" -> ")[0].Split(',')[1]);
+            List<VentLine> filteredVentLines = new List<VentLine>();
 
-            int endCoordX = int.Parse(line.Split(" -> ")[1].Split(',')[0]);
-            int endCoordY = int.Parse(line.Split(" -> ")[1].Split(',')[1]);
-
-            if (startCoordX == endCoordX && startCoordY != endCoordY || // vertical line
-                startCoordY == endCoordY && startCoordX != endCoordX || // horizontal line
-                Math.Abs(startCoordX - endCoordX) == Math.Abs(startCoordY - endCoordY)) // diagonal line
+            foreach (VentLine vl in ventLines)
             {
-                return true;
+                if (vl.StartCoords.X == vl.EndCoords.X && vl.StartCoords.Y != vl.EndCoords.Y || // vertical
+                    vl.StartCoords.Y == vl.EndCoords.Y && vl.StartCoords.X != vl.EndCoords.X || // horizontal
+                    Math.Abs(vl.StartCoords.X - vl.EndCoords.X) == Math.Abs(vl.StartCoords.Y - vl.EndCoords.Y)) // diagonal
+                {
+                    filteredVentLines.Add(vl);
+                }
             }
-            return false;
-        }
 
-        private void FilterLinesByDirection(List<string> inputFileLines)
-        {
-            foreach (string line in inputFileLines)
-            {
-                if (CheckLineDirection(line)) _filteredInputLines.Add(line);
-            }
+            return filteredVentLines;
         }
 
         private List<VentLine> ConvertLinesToVentLines(List<string> filteredInputLines)
