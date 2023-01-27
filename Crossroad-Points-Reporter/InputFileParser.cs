@@ -16,9 +16,16 @@
             }
             ClearConsole();
 
-            GetLines(path);
+            string[] inputFileLines = GetInputFileLines(path);
 
-            Console.WriteLine(_lines[0]);
+            if (!CheckLinesFormat(inputFileLines))
+            {
+                Console.WriteLine("Input data is not in correct format!");
+                GetVentLines();
+            }
+
+            _lines = inputFileLines.ToList();
+
 
             return _ventLines;
         }
@@ -36,9 +43,25 @@
             return true;
         }
 
-        private void GetLines(string path)
+        private string[] GetInputFileLines(string path)
         {
-            _lines = File.ReadAllLines(path).ToList();
+            return File.ReadAllLines(path);
+        }
+
+        private bool CheckLinesFormat(string[] lines)
+        {
+            foreach (string line in lines)
+            {
+                string[] startCoords = line.Split(" -> ")[0].Split(",");
+                string[] endCoords = line.Split(" -> ")[1].Split(",");
+
+                if (!startCoords[0].All(char.IsDigit) ||
+                    !startCoords[1].All(char.IsDigit) ||
+                    !endCoords[0].All(char.IsDigit) ||
+                    !endCoords[1].All(char.IsDigit)) return false;
+            }
+
+            return true;
         }
 
         private void ClearConsole()
