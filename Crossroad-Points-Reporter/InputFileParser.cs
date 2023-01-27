@@ -21,9 +21,11 @@
 
             FilterLinesByDirection(inputFileLines);
 
-            foreach (string line in _filteredInputLines)
+            _ventLines = ConvertLinesToVentLines(_filteredInputLines);
+
+            foreach (VentLine ventLine in _ventLines)
             {
-                Console.WriteLine(line);
+                Console.WriteLine($"{ventLine.StartCoords.X},{ventLine.StartCoords.Y} -> {ventLine.EndCoords.X},{ventLine.EndCoords.Y}");
             }
 
             return _ventLines;
@@ -107,6 +109,29 @@
             {
                 if (CheckLineDirection(line)) _filteredInputLines.Add(line);
             }
+        }
+
+        private List<VentLine> ConvertLinesToVentLines(List<string> filteredInputLines)
+        {
+            List<VentLine> outputVentLines = new List<VentLine>();
+
+            foreach (string line in filteredInputLines)
+            {
+                int startCoordX = int.Parse(line.Split(" -> ")[0].Split(',')[0]);
+                int startCoordY = int.Parse(line.Split(" -> ")[0].Split(',')[1]);
+
+                int endCoordX = int.Parse(line.Split(" -> ")[1].Split(',')[0]);
+                int endCoordY = int.Parse(line.Split(" -> ")[1].Split(',')[1]);
+
+                Coords startCoords = new(startCoordX, startCoordY);
+                Coords endCoords = new(endCoordX, endCoordY);
+
+                VentLine ventLine = new(startCoords, endCoords);
+
+                outputVentLines.Add(ventLine);
+            }
+
+            return outputVentLines;
         }
 
         private void ClearConsole()
