@@ -3,7 +3,7 @@
     public class InputFileParser
     {
         private List<VentLine> _ventLines = new();
-        private List<string> _lines = new();
+        private List<string> _filteredInputLines = new();
 
         public List<VentLine> GetVentLines()
         {
@@ -21,7 +21,7 @@
 
             FilterLinesByDirection(inputFileLines);
 
-            foreach (string line in _lines)
+            foreach (string line in _filteredInputLines)
             {
                 Console.WriteLine(line);
             }
@@ -37,8 +37,7 @@
             while (path == null || path == "" || CheckFileExtension(path) == false)
             {
                 ClearConsole();
-                Console.WriteLine("Invalid path or file extension!");
-                Console.WriteLine("Enter file path: ");
+                Console.WriteLine("Invalid path or file extension!\nEnter file path: ");
                 path = Console.ReadLine();
             }
             ClearConsole();
@@ -78,7 +77,7 @@
                 catch (Exception)
                 {
                     Console.WriteLine("Input data is not in correct format!");
-                    GetVentLines();
+                    return false;
                 }
             }
 
@@ -106,7 +105,7 @@
         {
             foreach (string line in inputFileLines)
             {
-                if (CheckLineDirection(line)) _lines.Add(line);
+                if (CheckLineDirection(line)) _filteredInputLines.Add(line);
             }
         }
 
