@@ -7,14 +7,19 @@
 
         public List<VentLine> GetVentLines()
         {
-            string path = GetFilePath();
+            bool correctLinesFormat = false;
+            List<string> inputFileLines = new();
 
-            string[] inputFileLines = GetInputFileLines(path);
-
-            if (!CheckLinesFormat(inputFileLines))
+            while (!correctLinesFormat)
             {
-                Console.WriteLine("Input data is not in correct format!");
-                GetVentLines();
+                string path = GetFilePath();
+
+                inputFileLines = GetInputFileLines(path);
+
+                if (CheckLinesFormat(inputFileLines))
+                {
+                    correctLinesFormat = true;
+                }
             }
 
             FilterLinesByDirection(inputFileLines);
@@ -50,12 +55,12 @@
             return true;
         }
 
-        private string[] GetInputFileLines(string path)
+        private List<string> GetInputFileLines(string path)
         {
-            return File.ReadAllLines(path);
+            return File.ReadAllLines(path).ToList();
         }
 
-        private bool CheckLinesFormat(string[] lines)
+        private bool CheckLinesFormat(List<string> lines)
         {
             foreach (string line in lines)
             {
@@ -67,7 +72,11 @@
                     if (!startCoords[0].All(char.IsDigit) ||
                         !startCoords[1].All(char.IsDigit) ||
                         !endCoords[0].All(char.IsDigit) ||
-                        !endCoords[1].All(char.IsDigit)) return false;
+                        !endCoords[1].All(char.IsDigit))
+                    {
+                        Console.WriteLine("Input data is not in correct format!");
+                        return false;
+                    }
                 }
                 catch (Exception)
                 {
@@ -96,7 +105,7 @@
             return false;
         }
 
-        private void FilterLinesByDirection(string[] inputFileLines)
+        private void FilterLinesByDirection(List<string> inputFileLines)
         {
             foreach (string line in inputFileLines)
             {
