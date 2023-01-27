@@ -24,8 +24,12 @@
                 GetVentLines();
             }
 
-            _lines = inputFileLines.ToList();
+            FilterLinesByDirection(inputFileLines);
 
+            foreach (string line in _lines)
+            {
+                Console.WriteLine(line);
+            }
 
             return _ventLines;
         }
@@ -87,6 +91,14 @@
                 return true;
             }
             return false;
+        }
+
+        private void FilterLinesByDirection(string[] inputFileLines)
+        {
+            foreach (string line in inputFileLines)
+            {
+                if (CheckLineDirection(line)) _lines.Add(line);
+            }
         }
 
         private void ClearConsole()
