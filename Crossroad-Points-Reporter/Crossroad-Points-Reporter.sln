@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32210.238
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crossroad-Points-Reporter", "Crossroad-Points-Reporter.csproj", "{D6FC6BAC-ADBB-42ED-8C3D-2213877906CE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D6FC6BAC-ADBB-42ED-8C3D-2213877906CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6FC6BAC-ADBB-42ED-8C3D-2213877906CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6FC6BAC-ADBB-42ED-8C3D-2213877906CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6FC6BAC-ADBB-42ED-8C3D-2213877906CE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {235F0434-E865-432D-A9F9-DF6E74129E72}
+	EndGlobalSection
+EndGlobal
