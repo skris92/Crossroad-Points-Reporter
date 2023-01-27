@@ -16,10 +16,7 @@
 
                 inputFileLines = GetInputFileLines(path);
 
-                if (CheckLinesFormat(inputFileLines))
-                {
-                    correctLinesFormat = true;
-                }
+                correctLinesFormat = CheckLinesFormat(inputFileLines);
             }
 
             FilterLinesByDirection(inputFileLines);
