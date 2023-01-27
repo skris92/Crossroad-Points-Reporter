@@ -16,6 +16,10 @@
             }
             ClearConsole();
 
+            GetLines(path);
+
+            Console.WriteLine(_lines[0]);
+
             return _ventLines;
         }
 
@@ -30,6 +34,11 @@
         {
             if (Path.GetExtension(path) != ".txt") return false;
             return true;
+        }
+
+        private void GetLines(string path)
+        {
+            _lines = File.ReadAllLines(path).ToList();
         }
 
         private void ClearConsole()
