@@ -2,18 +2,14 @@
 {
     public class Coords
     {
-        public int X { get; private set; }
+        public int X { get; }
 
-        public int Y { get; private set; }
+        public int Y { get; }
 
-        public void SetX(int coordinateX)
+        public Coords(int x, int y)
         {
-            X = coordinateX;
-        }
-
-        public void SetY(int coordinateY)
-        {
-            Y = coordinateY;
+            X = x;
+            Y = y;
         }
     }
 }
