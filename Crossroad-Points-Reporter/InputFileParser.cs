@@ -74,6 +74,18 @@
 
         private bool CheckLineDirection(string line)
         {
+            int startCoordX = int.Parse(line.Split(" -> ")[0].Split(',')[0]);
+            int startCoordY = int.Parse(line.Split(" -> ")[0].Split(',')[1]);
+
+            int endCoordX = int.Parse(line.Split(" -> ")[1].Split(',')[0]);
+            int endCoordY = int.Parse(line.Split(" -> ")[1].Split(',')[1]);
+
+            if (startCoordX == endCoordX && startCoordY != endCoordY || // vertical line
+                startCoordY == endCoordY && startCoordX != endCoordX || // horizontal line
+                Math.Abs(startCoordX - endCoordX) == Math.Abs(startCoordY - endCoordY)) // diagonal line
+            {
+                return true;
+            }
             return false;
         }
 
