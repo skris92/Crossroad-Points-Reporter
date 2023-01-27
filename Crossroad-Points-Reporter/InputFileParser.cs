@@ -7,14 +7,7 @@
 
         public List<VentLine> GetVentLines()
         {
-            string? path = GetFilePath();
-            while (path == null || path == "" || CheckFileExtension(path) == false)
-            {
-                ClearConsole();
-                Console.WriteLine("Invalid path or file extension!");
-                path = GetFilePath();
-            }
-            ClearConsole();
+            string path = GetFilePath();
 
             string[] inputFileLines = GetInputFileLines(path);
 
@@ -34,11 +27,21 @@
             return _ventLines;
         }
 
-        private string? GetFilePath()
+        private string GetFilePath()
         {
             Console.WriteLine("Enter file path: ");
+            string? path = Console.ReadLine();
 
-            return Console.ReadLine();
+            while (path == null || path == "" || CheckFileExtension(path) == false)
+            {
+                ClearConsole();
+                Console.WriteLine("Invalid path or file extension!");
+                Console.WriteLine("Enter file path: ");
+                path = Console.ReadLine();
+            }
+            ClearConsole();
+
+            return path;
         }
 
         private bool CheckFileExtension(string path)
