@@ -4,12 +4,13 @@ namespace Crossroad_Points_Reporter
 {
     public class DiagramCreator
     {
-        private int[][] _area;
-        private List<int[]> _crossroadPoints = new();
+        private int[,] _area;
+        private Dictionary<int[,], int> _crossroadPoints = new();
 
-        public int[][] CreateDiagram(List<VentLine> ventLines)
+        public int[,] CreateDiagram(List<VentLine> ventLines)
         {
-            _area = new int[3][];
+            InitializeDiagram(ventLines);
+
             return _area;
         }
 
@@ -29,10 +30,17 @@ namespace Crossroad_Points_Reporter
                 if (maxHeight < line.EndCoords.Y) maxHeight = line.EndCoords.Y;
             }
 
-            areaSize.Add("maxWidth", maxWidth);
-            areaSize.Add("maxHeight", maxHeight);
+            areaSize.Add("Width", maxWidth);
+            areaSize.Add("Height", maxHeight);
 
             return areaSize;
+        }
+
+        private void InitializeDiagram(List<VentLine> ventLines)
+        {
+            Dictionary<string, int> area = CalculateAreaSize(ventLines);
+
+            _area = new int[area["Height"], area["Width"]];
         }
     }
 }
