@@ -155,13 +155,18 @@ namespace Crossroad_Points_Reporter
             // Registering crossroad points
             if (_area[coordY, coordX] > 1)
             {
-                if (_crossroadPoints.ContainsKey($"({coordX}, {coordY})")) 
-                {
-                    _crossroadPoints[$"({coordX}, {coordY})"]++;
-                    return;
-                }
-                _crossroadPoints.Add($"({coordX}, {coordY})", _area[coordY, coordX]);
+                RegisterCrossroadPoint(coordX, coordY);
             }
+        }
+
+        private void RegisterCrossroadPoint(int coordX, int coordY)
+        {
+            if (_crossroadPoints.ContainsKey($"({coordX}, {coordY})"))
+            {
+                _crossroadPoints[$"({coordX}, {coordY})"]++;
+                return;
+            }
+            _crossroadPoints.Add($"({coordX}, {coordY})", _area[coordY, coordX]);
         }
     }
 }
