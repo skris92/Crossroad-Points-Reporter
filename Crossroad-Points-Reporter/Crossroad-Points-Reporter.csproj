@@ -8,4 +8,14 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="InputFiles\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="InputFileParserClassLibrary">
+      <HintPath>..\InputFileParserClassLibrary\bin\Debug\net6.0\InputFileParserClassLibrary.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>
