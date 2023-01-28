@@ -13,7 +13,7 @@ namespace Crossroad_Points_Reporter
 
             foreach (var line in ventLines)
             {
-                DrawVentLine(line);
+                DrawVentLines(line);
             }
 
             return _area;
@@ -48,7 +48,7 @@ namespace Crossroad_Points_Reporter
             _area = new int[area["Height"], area["Width"]];
         }
 
-        private void DrawVentLine(VentLine ventLine)
+        private void DrawVentLines(VentLine ventLine)
         {
             // vertical line
             if (ventLine.StartCoords.X == ventLine.EndCoords.X &&
