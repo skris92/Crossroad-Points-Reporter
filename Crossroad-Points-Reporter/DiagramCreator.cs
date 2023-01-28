@@ -51,34 +51,46 @@ namespace Crossroad_Points_Reporter
         private void DrawVentLines(VentLine ventLine)
         {
             // vertical line
-            if (ventLine.StartCoords.X == ventLine.EndCoords.X &&
-                ventLine.StartCoords.Y < ventLine.EndCoords.Y)
+            if (ventLine.StartCoords.X == ventLine.EndCoords.X)
+            {
+                DrawVerticalVentLines(ventLine);
+            }
+
+            // horizontal line
+            if (ventLine.StartCoords.Y == ventLine.EndCoords.Y)
+            {
+                DrawHorizontalVentLines(ventLine);
+            }
+        }
+
+        private void DrawVerticalVentLines(VentLine ventLine)
+        {
+            if (ventLine.StartCoords.Y < ventLine.EndCoords.Y)
             {
                 for (int i = ventLine.StartCoords.Y; i <= ventLine.EndCoords.Y; i++)
                 {
                     SetVentPoint(ventLine.StartCoords.X, i);
                 }
             }
-            else if (ventLine.StartCoords.X == ventLine.EndCoords.X && 
-                     ventLine.StartCoords.Y > ventLine.EndCoords.Y)
+            else if (ventLine.StartCoords.Y > ventLine.EndCoords.Y)
             {
                 for (int i = ventLine.StartCoords.Y; i >= ventLine.EndCoords.Y; i--)
                 {
                     SetVentPoint(ventLine.StartCoords.X, i);
                 }
             }
+        }
 
-            // horizontal line
-            if (ventLine.StartCoords.Y == ventLine.EndCoords.Y &&
-                ventLine.StartCoords.X < ventLine.EndCoords.X)
+        private void DrawHorizontalVentLines(VentLine ventLine)
+        {
+            if (ventLine.StartCoords.X < ventLine.EndCoords.X)
             {
                 for (int i = ventLine.StartCoords.X; i <= ventLine.EndCoords.X; i++)
                 {
                     SetVentPoint(i, ventLine.StartCoords.Y);
                 }
             }
-            else if (ventLine.StartCoords.Y == ventLine.EndCoords.Y &&
-                     ventLine.StartCoords.X > ventLine.EndCoords.X)
+            else if (ventLine.StartCoords.X > ventLine.EndCoords.X)
             {
                 for (int i = ventLine.StartCoords.X; i >= ventLine.EndCoords.X; i--)
                 {
