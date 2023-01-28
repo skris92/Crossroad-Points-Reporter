@@ -11,7 +11,20 @@
             {
                 string path = GetFilePath();
 
-                inputFileLines = GetInputFileLines(path);
+                try
+                {
+                    inputFileLines = GetInputFileLines(path);
+                }
+                catch (DirectoryNotFoundException)
+                {
+                    Console.WriteLine("Invalid file path!");
+                    continue;
+                }
+                catch (FileNotFoundException)
+                {
+                    Console.WriteLine("File not found!");
+                    continue;
+                }
 
                 correctLinesFormat = CheckInputFileLinesFormat(inputFileLines);
             }
@@ -25,19 +38,25 @@
 
         private string GetFilePath()
         {
-            Console.WriteLine("Enter file path: ");
-            string? path = Console.ReadLine();
-
-            // Asking for input until a proper path with proper file extension added
-            while (path == null || path == "" || CheckFileExtension(path) == false)
+            while (true)
             {
-                ClearConsole();
-                Console.WriteLine("Invalid path or file extension!\nEnter file path: ");
-                path = Console.ReadLine();
-            }
-            ClearConsole();
+                Console.WriteLine("Enter file path: ");
+                string? path = Console.ReadLine();
 
-            return path;
+                if (path == null || path == "")
+                {
+                    ClearConsole();
+                    continue;
+                }
+                else if (!CheckFileExtension(path))
+                {
+                    ClearConsole();
+                    Console.WriteLine("Invalid file extension!");
+                    continue;
+                }
+                ClearConsole();
+                return path;
+            }
         }
 
         private bool CheckFileExtension(string path)
