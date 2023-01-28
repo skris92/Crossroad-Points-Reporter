@@ -1,2 +1,11 @@
 ﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+using InputFileParserClassLibrary;
+using Crossroad_Points_Reporter;
+
+List<VentLine> ventLines = InputFileParser.GetVentLines();
+
+Diagram diagram = DiagramCreator.CreateDiagram(ventLines);
+
+diagram.Display();
+
+diagram.DisplayCrossroadPoints();
