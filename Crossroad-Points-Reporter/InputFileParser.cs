@@ -83,12 +83,14 @@
                     if (!startCoords[0].All(char.IsDigit) ||
                         !startCoords[1].All(char.IsDigit) ||
                         !endCoords[0].All(char.IsDigit) ||
-                        !endCoords[1].All(char.IsDigit))
+                        !endCoords[1].All(char.IsDigit) ||
+                        startCoords.Length > 2 || endCoords.Length > 2) // More than one "," between coordinates
                     {
-                        throw new Exception();
+                        Console.WriteLine("Input data is not in correct format!");
+                        return false;
                     }
                 }
-                catch (Exception)
+                catch (IndexOutOfRangeException)
                 {
                     Console.WriteLine("Input data is not in correct format!");
                     return false;
