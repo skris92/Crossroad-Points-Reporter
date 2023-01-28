@@ -1,2 +1,8 @@
 ﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+using Crossroad_Points_Reporter;
+
+Diagram diagram = DiagramCreator.CreateDiagram();
+
+diagram.Display();
+
+diagram.DisplayCrossroadPoints();
