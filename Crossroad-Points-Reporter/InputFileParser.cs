@@ -1,8 +1,8 @@
 ﻿namespace Crossroad_Points_Reporter
 {
-    public class InputFileParser
+    public static class InputFileParser
     {
-        public List<VentLine> GetVentLines()
+        public static List<VentLine> GetVentLines()
         {
             bool correctLinesFormat = false;
             List<string> inputFileLines = new();
@@ -36,7 +36,7 @@
             return filteredVentLines;
         }
 
-        private string GetFilePath()
+        private static string GetFilePath()
         {
             while (true)
             {
@@ -59,18 +59,18 @@
             }
         }
 
-        private bool CheckFileExtension(string path)
+        private static bool CheckFileExtension(string path)
         {
             if (Path.GetExtension(path) != ".txt") return false;
             return true;
         }
 
-        private List<string> GetInputFileLines(string path)
+        private static List<string> GetInputFileLines(string path)
         {
             return File.ReadAllLines(path).ToList();
         }
 
-        private bool CheckInputFileLinesFormat(List<string> lines)
+        private static bool CheckInputFileLinesFormat(List<string> lines)
         {
             // Checking input format before any conversions
             foreach (string line in lines)
@@ -100,7 +100,7 @@
             return true;
         }
 
-        private List<VentLine> ConvertLinesToVentLines(List<string> filteredInputLines)
+        private static List<VentLine> ConvertLinesToVentLines(List<string> filteredInputLines)
         {
             List<VentLine> outputVentLines = new List<VentLine>();
 
@@ -124,7 +124,7 @@
             return outputVentLines;
         }
 
-        private List<VentLine> FilterVentLinesByDirection(List<VentLine> ventLines)
+        private static List<VentLine> FilterVentLinesByDirection(List<VentLine> ventLines)
         {
             List<VentLine> filteredVentLines = new List<VentLine>();
 
@@ -141,7 +141,7 @@
             return filteredVentLines;
         }
 
-        private void ClearConsole()
+        private static void ClearConsole()
         {
             Console.Clear();
         }
