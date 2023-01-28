@@ -17,7 +17,7 @@
                 }
                 catch (DirectoryNotFoundException)
                 {
-                    Console.WriteLine("Invalid file path!");
+                    Console.WriteLine("Directory not found!");
                     continue;
                 }
                 catch (FileNotFoundException)
@@ -40,22 +40,23 @@
         {
             while (true)
             {
-                Console.WriteLine("Enter file path: ");
-                string? path = Console.ReadLine();
+                Console.WriteLine("Enter file path: (Enter \"Q\" to quit)");
+                string? input = Console.ReadLine();
 
-                if (path == null || path == "")
+                if (input == null || input == "")
                 {
                     ClearConsole();
                     continue;
                 }
-                else if (!CheckFileExtension(path))
+                else if (input == "q" || input == "Q") Environment.Exit(0);
+                else if (!CheckFileExtension(input))
                 {
                     ClearConsole();
                     Console.WriteLine("Invalid file extension!");
                     continue;
                 }
                 ClearConsole();
-                return path;
+                return input;
             }
         }
 
