@@ -59,17 +59,23 @@ namespace Crossroad_Points_Reporter
             // vertical line
             if (ventLine.StartCoords.X == ventLine.EndCoords.X)
             {
-                DrawVerticalVentLines(ventLine);
+                DrawVerticalVentLine(ventLine);
             }
 
             // horizontal line
-            if (ventLine.StartCoords.Y == ventLine.EndCoords.Y)
+            else if (ventLine.StartCoords.Y == ventLine.EndCoords.Y)
             {
-                DrawHorizontalVentLines(ventLine);
+                DrawHorizontalVentLine(ventLine);
+            }
+
+            // diagonal line
+            else
+            {
+                DrawDiagonalVentLine(ventLine);
             }
         }
 
-        private void DrawVerticalVentLines(VentLine ventLine)
+        private void DrawVerticalVentLine(VentLine ventLine)
         {
             if (ventLine.StartCoords.Y < ventLine.EndCoords.Y)
             {
@@ -87,7 +93,7 @@ namespace Crossroad_Points_Reporter
             }
         }
 
-        private void DrawHorizontalVentLines(VentLine ventLine)
+        private void DrawHorizontalVentLine(VentLine ventLine)
         {
             if (ventLine.StartCoords.X < ventLine.EndCoords.X)
             {
@@ -105,9 +111,42 @@ namespace Crossroad_Points_Reporter
             }
         }
 
+        private void DrawDiagonalVentLine(VentLine ventLine)
+        {
+            int ventLineLength = Math.Abs(ventLine.StartCoords.X - ventLine.EndCoords.X) + 1;
+            int currentX = ventLine.StartCoords.X;
+            int currentY = ventLine.StartCoords.Y;
+
+            for (int i = 0; i < ventLineLength; i++)
+            {
+                if (ventLine.StartCoords.X > ventLine.EndCoords.X &&
+                    ventLine.StartCoords.Y < ventLine.EndCoords.Y)
+                {
+                    SetVentPoint(currentX--, currentY++);
+                }
+                else if (ventLine.StartCoords.X < ventLine.EndCoords.X &&
+                         ventLine.StartCoords.Y > ventLine.EndCoords.Y)
+                {
+                    SetVentPoint(currentX++, currentY--);
+                }
+                else if (ventLine.StartCoords.X > ventLine.EndCoords.X &&
+                         ventLine.StartCoords.Y > ventLine.EndCoords.Y)
+                {
+                    SetVentPoint(currentX--, currentY--);
+                }
+                else if (ventLine.StartCoords.X < ventLine.EndCoords.X &&
+                         ventLine.StartCoords.Y < ventLine.EndCoords.Y)
+                {
+                    SetVentPoint(currentX++, currentY++);
+                }
+            }
+        }
+
         private void SetVentPoint(int coordX, int coordY)
         {
             _area[coordY, coordX]++;
+
+            // Registering crossroad points
             if (_area[coordY, coordX] > 1)
             {
                 _crossroadPoints.Add($"({coordX}, {coordY})", _area[coordY, coordX]);
