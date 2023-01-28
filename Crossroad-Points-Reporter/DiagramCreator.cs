@@ -2,35 +2,18 @@
 
 namespace Crossroad_Points_Reporter
 {
-    public class DiagramCreator
+    public static class DiagramCreator
     {
-        private List<VentLine> _ventLines;
-        private int[,] _area;
-        private SortedDictionary<string, int> _crossroadPoints;
-
-        public DiagramCreator(List<VentLine> ventLines)
+        public static Diagram CreateDiagram(List<VentLine> ventLines)
         {
-            _ventLines = ventLines;
-            _area = InitializeDiagram(ventLines);
-            _crossroadPoints = new();
+            Diagram diagram = InitializeDiagram(ventLines);
+
+            DrawVentLines(diagram, ventLines);
+
+            return diagram;
         }
 
-        public int[,] CreateDiagram()
-        {
-            foreach (var line in _ventLines)
-            {
-                DrawVentLines(line);
-            }
-
-            return _area;
-        }
-
-        public SortedDictionary<string, int> GetCrossroadPoints()
-        {
-            return _crossroadPoints;
-        }
-
-        private Dictionary<string, int> CalculateAreaSize(List<VentLine> ventLines)
+        private static Dictionary<string, int> CalculateAreaSize(List<VentLine> ventLines)
         {
             Dictionary<string, int> areaSize = new Dictionary<string, int>();
 
@@ -52,72 +35,75 @@ namespace Crossroad_Points_Reporter
             return areaSize;
         }
 
-        private int[,] InitializeDiagram(List<VentLine> ventLines)
+        private static Diagram InitializeDiagram(List<VentLine> ventLines)
         {
             Dictionary<string, int> area = CalculateAreaSize(ventLines);
 
             // initializing _area size
-            return new int[area["Height"], area["Width"]];
+            return new Diagram(new int[area["Height"], area["Width"]]);
         }
 
-        private void DrawVentLines(VentLine ventLine)
+        private static void DrawVentLines(Diagram diagram, List<VentLine> ventLines)
         {
-            // vertical line
-            if (ventLine.StartCoords.X == ventLine.EndCoords.X)
+            foreach (VentLine ventLine in ventLines)
             {
-                DrawVerticalVentLine(ventLine);
-            }
+                // vertical line
+                if (ventLine.StartCoords.X == ventLine.EndCoords.X)
+                {
+                    DrawVerticalVentLine(ventLine, diagram);
+                }
 
-            // horizontal line
-            else if (ventLine.StartCoords.Y == ventLine.EndCoords.Y)
-            {
-                DrawHorizontalVentLine(ventLine);
-            }
+                // horizontal line
+                else if (ventLine.StartCoords.Y == ventLine.EndCoords.Y)
+                {
+                    DrawHorizontalVentLine(ventLine, diagram);
+                }
 
-            // diagonal line
-            else
-            {
-                DrawDiagonalVentLine(ventLine);
+                // diagonal line
+                else
+                {
+                    DrawDiagonalVentLine(ventLine, diagram);
+                }
             }
         }
 
-        private void DrawVerticalVentLine(VentLine ventLine)
+        private static void DrawVerticalVentLine(VentLine ventLine, Diagram diagram)
         {
             if (ventLine.StartCoords.Y < ventLine.EndCoords.Y)
             {
                 for (int i = ventLine.StartCoords.Y; i <= ventLine.EndCoords.Y; i++)
                 {
-                    SetVentPoint(ventLine.StartCoords.X, i);
+                    SetVentPoint(ventLine.StartCoords.X, i, diagram);
                 }
             }
             else if (ventLine.StartCoords.Y > ventLine.EndCoords.Y)
             {
                 for (int i = ventLine.StartCoords.Y; i >= ventLine.EndCoords.Y; i--)
                 {
-                    SetVentPoint(ventLine.StartCoords.X, i);
+                    SetVentPoint(ventLine.StartCoords.X, i, diagram);
                 }
             }
         }
 
-        private void DrawHorizontalVentLine(VentLine ventLine)
+        private static void DrawHorizontalVentLine(VentLine ventLine, Diagram diagram)
         {
             if (ventLine.StartCoords.X < ventLine.EndCoords.X)
             {
                 for (int i = ventLine.StartCoords.X; i <= ventLine.EndCoords.X; i++)
                 {
-                    SetVentPoint(i, ventLine.StartCoords.Y);
+                    SetVentPoint(i, ventLine.StartCoords.Y, diagram);
                 }
             }
             else if (ventLine.StartCoords.X > ventLine.EndCoords.X)
             {
                 for (int i = ventLine.StartCoords.X; i >= ventLine.EndCoords.X; i--)
                 {
-                    SetVentPoint(i, ventLine.StartCoords.Y);
+                    SetVentPoint(i, ventLine.StartCoords.Y, diagram);
                 }
             }
         }
 
-        private void DrawDiagonalVentLine(VentLine ventLine)
+        private static void DrawDiagonalVentLine(VentLine ventLine, Diagram diagram)
         {
             int ventLineLength = Math.Abs(ventLine.StartCoords.X - ventLine.EndCoords.X) + 1;
             int currentX = ventLine.StartCoords.X;
@@ -128,45 +114,45 @@ namespace Crossroad_Points_Reporter
                 if (ventLine.StartCoords.X > ventLine.EndCoords.X &&
                     ventLine.StartCoords.Y < ventLine.EndCoords.Y)
                 {
-                    SetVentPoint(currentX--, currentY++);
+                    SetVentPoint(currentX--, currentY++, diagram);
                 }
                 else if (ventLine.StartCoords.X < ventLine.EndCoords.X &&
                          ventLine.StartCoords.Y > ventLine.EndCoords.Y)
                 {
-                    SetVentPoint(currentX++, currentY--);
+                    SetVentPoint(currentX++, currentY--, diagram);
                 }
                 else if (ventLine.StartCoords.X > ventLine.EndCoords.X &&
                          ventLine.StartCoords.Y > ventLine.EndCoords.Y)
                 {
-                    SetVentPoint(currentX--, currentY--);
+                    SetVentPoint(currentX--, currentY--, diagram);
                 }
                 else if (ventLine.StartCoords.X < ventLine.EndCoords.X &&
                          ventLine.StartCoords.Y < ventLine.EndCoords.Y)
                 {
-                    SetVentPoint(currentX++, currentY++);
+                    SetVentPoint(currentX++, currentY++, diagram);
                 }
             }
         }
 
-        private void SetVentPoint(int coordX, int coordY)
+        private static void SetVentPoint(int coordX, int coordY, Diagram diagram)
         {
-            _area[coordY, coordX]++;
+            diagram.SetAreaPoint(coordX, coordY);
 
             // Registering crossroad points
-            if (_area[coordY, coordX] > 1)
+            if (diagram.Area[coordY, coordX] > 1)
             {
-                RegisterCrossroadPoint(coordX, coordY);
+                RegisterCrossroadPoint(coordX, coordY, diagram);
             }
         }
 
-        private void RegisterCrossroadPoint(int coordX, int coordY)
+        private static void RegisterCrossroadPoint(int coordX, int coordY, Diagram diagram)
         {
-            if (_crossroadPoints.ContainsKey($"({coordX}, {coordY})"))
+            if (diagram.CrossroadPoints.ContainsKey($"({coordX}, {coordY})"))
             {
-                _crossroadPoints[$"({coordX}, {coordY})"]++;
+                diagram.UpdateCrossroadPoint(coordX, coordY);
                 return;
             }
-            _crossroadPoints.Add($"({coordX}, {coordY})", _area[coordY, coordX]);
+            diagram.SetCrossroadPoint(coordX, coordY);
         }
     }
 }
