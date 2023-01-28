@@ -5,7 +5,7 @@ namespace Crossroad_Points_Reporter
     public class DiagramCreator
     {
         private int[,] _area;
-        private Dictionary<string, int> _crossroadPoints = new();
+        private SortedDictionary<string, int> _crossroadPoints = new();
 
         public int[,] CreateDiagram(List<VentLine> ventLines)
         {
@@ -17,6 +17,11 @@ namespace Crossroad_Points_Reporter
             }
 
             return _area;
+        }
+
+        public SortedDictionary<string, int> GetCrossroadPoints()
+        {
+            return _crossroadPoints;
         }
 
         private Dictionary<string, int> CalculateAreaSize(List<VentLine> ventLines)
@@ -45,6 +50,7 @@ namespace Crossroad_Points_Reporter
         {
             Dictionary<string, int> area = CalculateAreaSize(ventLines);
 
+            // initializing _area size
             _area = new int[area["Height"], area["Width"]];
         }
 
