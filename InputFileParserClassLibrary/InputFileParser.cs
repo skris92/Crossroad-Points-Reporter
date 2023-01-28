@@ -1,4 +1,4 @@
-﻿namespace Crossroad_Points_Reporter
+﻿namespace InputFileParserClassLibrary
 {
     public static class InputFileParser
     {
