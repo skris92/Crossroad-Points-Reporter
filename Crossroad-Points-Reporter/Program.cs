@@ -1,10 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
-using InputFileParserClassLibrary;
 using Crossroad_Points_Reporter;
 
-List<VentLine> ventLines = InputFileParser.GetVentLines();
-
-Diagram diagram = DiagramCreator.CreateDiagram(ventLines);
+Diagram diagram = DiagramCreator.CreateDiagram();
 
 diagram.Display();
 
