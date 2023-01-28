@@ -4,14 +4,20 @@ namespace Crossroad_Points_Reporter
 {
     public class DiagramCreator
     {
+        private List<VentLine> _ventLines;
         private int[,] _area;
-        private SortedDictionary<string, int> _crossroadPoints = new();
+        private SortedDictionary<string, int> _crossroadPoints;
 
-        public int[,] CreateDiagram(List<VentLine> ventLines)
+        public DiagramCreator(List<VentLine> ventLines)
         {
-            InitializeDiagram(ventLines);
+            _ventLines = ventLines;
+            _area = InitializeDiagram(ventLines);
+            _crossroadPoints = new();
+        }
 
-            foreach (var line in ventLines)
+        public int[,] CreateDiagram()
+        {
+            foreach (var line in _ventLines)
             {
                 DrawVentLines(line);
             }
@@ -46,12 +52,12 @@ namespace Crossroad_Points_Reporter
             return areaSize;
         }
 
-        private void InitializeDiagram(List<VentLine> ventLines)
+        private int[,] InitializeDiagram(List<VentLine> ventLines)
         {
             Dictionary<string, int> area = CalculateAreaSize(ventLines);
 
             // initializing _area size
-            _area = new int[area["Height"], area["Width"]];
+            return new int[area["Height"], area["Width"]];
         }
 
         private void DrawVentLines(VentLine ventLine)
