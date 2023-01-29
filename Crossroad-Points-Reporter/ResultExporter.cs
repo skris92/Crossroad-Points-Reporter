@@ -8,8 +8,7 @@
 
             while (chosenOption != "E" && chosenOption != "e" && chosenOption != "Q" && chosenOption != "q")
             {
-                Console.WriteLine("Enter \"E\" to export results or \"Q\" to quit\n" +
-                    "Output file will be saved at input file location.");
+                Console.WriteLine("Enter \"E\" to export results or \"Q\" to quit");
                 chosenOption = Console.ReadLine();
             }
             if (chosenOption == "E" || chosenOption == "e") return true;
@@ -18,9 +17,11 @@
 
         public static void Export(string directoryPath, string result)
         {
-            string fileName = GetFileName() + GetFileExtension();
+            string fileName = directoryPath + GetFileName() + GetFileExtension();
 
-            File.WriteAllText(directoryPath + fileName, result, System.Text.Encoding.UTF8);
+            File.WriteAllText(fileName, result, System.Text.Encoding.UTF8);
+
+            Console.Write($"Result exported to:\n{fileName}");
         }
 
         private static string GetFileName()
