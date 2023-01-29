@@ -62,7 +62,7 @@
 
         private static bool CheckFileExtension(string path)
         {
-            if (Path.GetExtension(path) != ".txt") return false;
+            if (Path.GetExtension(path) != ".txt" && Path.GetExtension(path) != ".ans") return false;
             return true;
         }
 
