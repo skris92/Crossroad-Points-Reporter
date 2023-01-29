@@ -30,7 +30,7 @@
 
         public static void Result(string result)
         {
-                Console.WriteLine(result);
+                Console.WriteLine(result + "\n");
         }
     }
 }
