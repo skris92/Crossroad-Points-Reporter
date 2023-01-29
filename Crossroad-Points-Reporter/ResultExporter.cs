@@ -17,7 +17,8 @@
 
         public static void Export()
         {
-            string fileName = GetFileName();
+            string fileName = GetFileName() + GetFileExtension();
+            Console.WriteLine(fileName);
 
 
         }
@@ -26,12 +27,25 @@
         {
             string fileName = "";
 
-            while (fileName != "" || fileName != null)
+            while (fileName == "" || fileName == null)
             {
                 Console.WriteLine("Enter file name: ");
                 fileName = Console.ReadLine();
             }
             return fileName;
+        }
+
+        private static string GetFileExtension()
+        {
+            string fileExtension = "";
+
+            while (fileExtension == "")
+            {
+                Console.WriteLine("Enter file extension \"txt\" or \"ans\": ");
+                string chosenExtension = Console.ReadLine();
+                if (chosenExtension == "txt" || chosenExtension == "ans") fileExtension += chosenExtension;
+            }
+            return "." + fileExtension;
         }
     }
 }
