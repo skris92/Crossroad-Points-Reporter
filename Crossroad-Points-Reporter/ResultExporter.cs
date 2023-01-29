@@ -6,10 +6,11 @@
         {
             string? chosenOption = "";
 
-            while (chosenOption != "E" && chosenOption != "e" && chosenOption != "Q" && chosenOption != "q")
+            while (chosenOption != "E" && chosenOption != "e")
             {
                 Console.WriteLine("Enter \"E\" to export results or \"Q\" to quit");
                 chosenOption = Console.ReadLine();
+                if (chosenOption == "Q" || chosenOption == "q") Environment.Exit(0);
             }
             if (chosenOption == "E" || chosenOption == "e") return true;
             return false;
