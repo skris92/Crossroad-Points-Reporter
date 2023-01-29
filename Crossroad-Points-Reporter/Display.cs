@@ -2,7 +2,7 @@
 {
     public static class Display
     {
-        public static void Area(int[,] area)
+        public static void Diagram(int[,] area)
         {
             int lengthY = area.GetLength(0);
             int lengthX = area.GetLength(1);
@@ -28,9 +28,9 @@
             Console.ReadKey();
         }
 
-        public static void CrossroadPointsReport(string crossroadPointsReport)
+        public static void Result(string result)
         {
-                Console.WriteLine(crossroadPointsReport);
+                Console.WriteLine(result);
         }
     }
 }
