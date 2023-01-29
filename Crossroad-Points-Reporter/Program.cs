@@ -1,10 +1,18 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using Crossroad_Points_Reporter;
+using InputFileParserDLL;
 
-Diagram diagram = DiagramCreator.CreateDiagram();
+List<VentLine> ventLines = InputFileParser.GetVentLines();
 
-Display.Area(diagram.Area);
+Diagram diagram = DiagramCreator.CreateDiagram(ventLines);
 
-string crossroadPontsReport = diagram.GetCrossroadPointsReport();
+Display.Diagram(diagram.Area);
 
-Display.CrossroadPointsReport(crossroadPontsReport);
+string result = diagram.GetCrossroadPointsReport();
+
+Display.Result(result);
+
+if (ResultExporter.UserWantsToExport())
+{
+    ResultExporter.Export(InputFileParser.DirectoryPath, result);
+}
