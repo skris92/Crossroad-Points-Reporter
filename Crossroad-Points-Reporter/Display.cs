@@ -2,6 +2,7 @@
 {
     public static class Display
     {
+        // Preparing diagram for visualization by replacing 0 -> "."
         public static void Diagram(int[,] area)
         {
             int lengthY = area.GetLength(0);
@@ -38,12 +39,13 @@
 
         private static void ShowProgressBar(string message, int iteration, int areaLength)
         {
-            float progressPercent = (iteration + 1) / (float)areaLength * 50;
+            int progressBarLength = 50;
+            float progressPercent = (iteration + 1) / (float)areaLength * progressBarLength;
 
             Console.SetCursorPosition(0, 0);
             Console.Write($"{message}" +
                           $"[{new string('#', (int)progressPercent)}" +
-                          $"{new string('-', 50 - (int)progressPercent)}]\n");
+                          $"{new string('-', progressBarLength - (int)progressPercent)}]\n");
         }
     }
 }
