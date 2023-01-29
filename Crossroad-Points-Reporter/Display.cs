@@ -30,8 +30,7 @@
 
         public static void CrossroadPointsReport(string crossroadPointsReport)
         {
-            Console.Clear();
-            Console.WriteLine(crossroadPointsReport);
+                Console.WriteLine(crossroadPointsReport);
         }
     }
 }
