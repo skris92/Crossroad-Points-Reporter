@@ -34,8 +34,9 @@
                    fileName.Substring(fileName.Length - 4) != ".txt" &&
                    fileName.Substring(fileName.Length - 4) != ".ans")
             {
-                Console.WriteLine("Enter file name with extensions \".txt\" or \".ans\": ");
+                Console.WriteLine("Enter file name with extensions \".txt\" or \".ans\": (Enter \"Q\" to quit)");
                 fileName = Console.ReadLine();
+                if (fileName == "Q" || fileName == "q") Environment.Exit(0);
             }
             return fileName;
         }
