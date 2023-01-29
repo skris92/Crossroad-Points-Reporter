@@ -1,19 +1,22 @@
-﻿namespace InputFileParserClassLibrary
+﻿namespace InputFileParserDLL
 {
     public static class InputFileParser
     {
+        public static string DirectoryPath { get; private set; } // Used for future exporting
         public static List<VentLine> GetVentLines()
         {
             bool correctLinesFormat = false;
             List<string> inputFileLines = new();
 
+            // Validating user input
             while (!correctLinesFormat)
             {
-                string path = GetFilePath();
+                string filePath = GetFilePath();
+                DirectoryPath = Path.GetDirectoryName(filePath) + "\\";
 
                 try
                 {
-                    inputFileLines = GetInputFileLines(path);
+                    inputFileLines = GetInputFileLines(filePath);
                 }
                 catch (DirectoryNotFoundException)
                 {
@@ -38,6 +41,7 @@
 
         private static string GetFilePath()
         {
+            // Validating user input and file extension
             while (true)
             {
                 Console.WriteLine("Enter file path: (Enter \"Q\" to quit)");
@@ -62,7 +66,7 @@
 
         private static bool CheckFileExtension(string path)
         {
-            if (Path.GetExtension(path) != ".txt") return false;
+            if (Path.GetExtension(path) != ".txt" && Path.GetExtension(path) != ".ans") return false;
             return true;
         }
 
@@ -73,13 +77,15 @@
 
         private static bool CheckInputFileLinesFormat(List<string> lines)
         {
-            // Checking input format before any conversions
-            foreach (string line in lines)
+            // Checking input file format before any conversions
+            for (int i = 0; i < lines.Count; i++)
             {
+                ShowProgressBar("Parsing input data", i, lines.Count);
+                //Thread.Sleep(10); // for progress bar visibility
                 try
                 {
-                    string[] startCoords = line.Split(" -> ")[0].Split(",");
-                    string[] endCoords = line.Split(" -> ")[1].Split(",");
+                    string[] startCoords = lines[i].Split(" -> ")[0].Split(",");
+                    string[] endCoords = lines[i].Split(" -> ")[1].Split(",");
 
                     if (!startCoords[0].All(char.IsDigit) ||
                         !startCoords[1].All(char.IsDigit) ||
@@ -101,8 +107,20 @@
             return true;
         }
 
+        private static void ShowProgressBar(string message, int iteration, int length)
+        {
+            int progressBarLength = 50;
+            float progressPercent = (iteration + 1) / (float)length * progressBarLength;
+
+            Console.SetCursorPosition(0, 0);
+            Console.Write($"{message}" +
+                          $"[{new string('#', (int)progressPercent)}" +
+                          $"{new string('-', progressBarLength - (int)progressPercent)}]\n");
+        }
+
         private static List<VentLine> ConvertLinesToVentLines(List<string> filteredInputLines)
         {
+            // Converting data to VentLine objects
             List<VentLine> outputVentLines = new List<VentLine>();
 
             foreach (string line in filteredInputLines)
@@ -127,6 +145,8 @@
 
         private static List<VentLine> FilterVentLinesByDirection(List<VentLine> ventLines)
         {
+            // Filtering vent lines by direction,
+            // skipping non vertical, horizontal and diagonal lines
             List<VentLine> filteredVentLines = new List<VentLine>();
 
             foreach (VentLine vl in ventLines)

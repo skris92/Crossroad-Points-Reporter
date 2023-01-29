@@ -16,57 +16,41 @@
             Area[coordY, coordX]++;
         }
 
-        public void UpdateCrossroadPoint(int coordX, int coordY)
-        {
-            CrossroadPoints[$"{coordX},{coordY}"]++;
-        }
-
         public void SetCrossroadPoint(int coordX, int coordY)
         {
-            CrossroadPoints.Add($"{coordX},{coordY}", Area[coordY, coordX]);
-        }
-
-        public void Display()
-        {
-            int lengthY = Area.GetLength(0);
-            int lengthX = Area.GetLength(1);
-
-            string outputDiagram = "";
-
-            for (int i = 0; i < lengthY; i++)
+            if (CrossroadPoints.ContainsKey($"{coordX},{coordY}"))
             {
-                for (int j = 0; j < lengthX; j++)
-                {
-                    if (Area[i, j] == 0)
-                    {
-                        outputDiagram += ".";
-                    }
-                    else
-                    {
-                        outputDiagram += Area[i, j].ToString();
-                    }
-                }
-                outputDiagram += "\n";
+                CrossroadPoints[$"{coordX},{coordY}"]++;
             }
-            Console.Write(outputDiagram + "\n");
-            Console.ReadKey();
+            else
+            {
+                CrossroadPoints.Add($"{coordX},{coordY}", Area[coordY, coordX]);
+            }
         }
 
-        public void DisplayCrossroadPoints()
+        public void SortCrossroadPointsByCoordinates()
         {
-            Console.WriteLine($"Number of dangerous points: {CrossroadPoints.Count}\n");
-
-            foreach (KeyValuePair<string, int> crossroadPoint in CrossroadPoints
+            CrossroadPoints = CrossroadPoints
                 .OrderBy(x => int.Parse(x.Key.Split(",")[0]))
-                .ThenBy(x => int.Parse(x.Key.Split(",")[1])))
+                .ThenBy(x => int.Parse(x.Key.Split(",")[1]))
+                .ToDictionary(pair => pair.Key, pair => pair.Value);
+        }
+
+        public string GetCrossroadPointsReport()
+        {
+            List<string> result = new();
+
+            result.Add($"Number of dangerous points: {CrossroadPoints.Count}\n");
+
+            foreach (KeyValuePair<string, int> crossroadPoint in CrossroadPoints)
             {
-                Console.WriteLine(
+                result.Add( 
                     $"({crossroadPoint.Key.Split(",")[0]}, " +
                     $"{crossroadPoint.Key.Split(",")[1]}) -> " +
                     $"{crossroadPoint.Value}");
             }
 
-            Console.ReadKey();
+            return string.Join("\n", result);
         }
     }
 }

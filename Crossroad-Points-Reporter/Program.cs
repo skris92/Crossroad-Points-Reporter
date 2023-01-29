@@ -1,8 +1,27 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using Crossroad_Points_Reporter;
+using InputFileParserDLL;
 
-Diagram diagram = DiagramCreator.CreateDiagram();
+// Program runs until any of the user inputs is "Q" or "q"
+while (true)
+{
+    // Validating input format and converting data to VentLine objects
+    List<VentLine> ventLines = InputFileParser.GetVentLines();
 
-diagram.Display();
+    // Creating Diagram object from VentLine objects
+    Diagram diagram = DiagramCreator.CreateDiagram(ventLines);
 
-diagram.DisplayCrossroadPoints();
+    // Visualizing diagram
+    //Display.Diagram(diagram.Area); -- I misunderstood the task, it wasn't a requirement
+
+    // Visualizing result
+    string result = diagram.GetCrossroadPointsReport();
+    Display.Result(result);
+
+    // Exporting result
+    if (ResultExporter.UserWantsToExport())
+    {
+        ResultExporter.Export(InputFileParser.DirectoryPath, result);
+
+    }
+}
