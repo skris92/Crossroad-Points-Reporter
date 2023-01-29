@@ -4,10 +4,8 @@ namespace Crossroad_Points_Reporter
 {
     public static class DiagramCreator
     {
-        public static Diagram CreateDiagram()
+        public static Diagram CreateDiagram(List<VentLine> ventLines)
         {
-            List<VentLine> ventLines = InputFileParser.GetVentLines();
-
             Diagram diagram = InitializeDiagram(ventLines);
 
             DrawVentLines(diagram, ventLines);
