@@ -12,7 +12,7 @@
             while (!correctLinesFormat)
             {
                 string filePath = GetFilePath();
-                DirectoryPath = Path.GetDirectoryName(filePath);
+                DirectoryPath = Path.GetDirectoryName(filePath) + "\\";
 
                 try
                 {
