@@ -4,28 +4,28 @@
     {
         public static bool UserWantsToExport()
         {
-            string chosenOption = "";
+            string? chosenOption = "";
 
             while (chosenOption != "E" && chosenOption != "e" && chosenOption != "Q" && chosenOption != "q")
             {
-                Console.WriteLine("Enter \"E\" to export results or \"Q\" to quit");
+                Console.WriteLine("Enter \"E\" to export results or \"Q\" to quit\n" +
+                    "Output file will be saved at input file location.");
                 chosenOption = Console.ReadLine();
             }
             if (chosenOption == "E" || chosenOption == "e") return true;
             return false;
         }
 
-        public static void Export()
+        public static void Export(string directoryPath, string result)
         {
             string fileName = GetFileName() + GetFileExtension();
-            Console.WriteLine(fileName);
 
-
+            File.WriteAllText(directoryPath + fileName, result, System.Text.Encoding.UTF8);
         }
 
         private static string GetFileName()
         {
-            string fileName = "";
+            string? fileName = "";
 
             while (fileName == "" || fileName == null)
             {
@@ -42,7 +42,7 @@
             while (fileExtension == "")
             {
                 Console.WriteLine("Enter file extension \"txt\" or \"ans\": ");
-                string chosenExtension = Console.ReadLine();
+                string? chosenExtension = Console.ReadLine();
                 if (chosenExtension == "txt" || chosenExtension == "ans") fileExtension += chosenExtension;
             }
             return "." + fileExtension;
