@@ -142,18 +142,8 @@ namespace Crossroad_Points_Reporter
             // Registering crossroad points
             if (diagram.Area[coordY, coordX] > 1)
             {
-                RegisterCrossroadPoint(coordX, coordY, diagram);
+                diagram.SetCrossroadPoint(coordX,coordY);
             }
-        }
-
-        private static void RegisterCrossroadPoint(int coordX, int coordY, Diagram diagram)
-        {
-            if (diagram.CrossroadPoints.ContainsKey($"{coordX},{coordY}"))
-            {
-                diagram.UpdateCrossroadPoint(coordX, coordY);
-                return;
-            }
-            diagram.SetCrossroadPoint(coordX, coordY);
         }
     }
 }
