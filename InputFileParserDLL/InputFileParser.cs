@@ -2,18 +2,21 @@
 {
     public static class InputFileParser
     {
+        public static string DirectoryPath { get; private set; } // Used for future exporting
         public static List<VentLine> GetVentLines()
         {
             bool correctLinesFormat = false;
             List<string> inputFileLines = new();
 
+            // Validating user input
             while (!correctLinesFormat)
             {
-                string path = GetFilePath();
+                string filePath = GetFilePath();
+                DirectoryPath = Path.GetDirectoryName(filePath);
 
                 try
                 {
-                    inputFileLines = GetInputFileLines(path);
+                    inputFileLines = GetInputFileLines(filePath);
                 }
                 catch (DirectoryNotFoundException)
                 {
@@ -38,6 +41,7 @@
 
         private static string GetFilePath()
         {
+            // Validating user input and file extension
             while (true)
             {
                 Console.WriteLine("Enter file path: (Enter \"Q\" to quit)");
@@ -73,7 +77,7 @@
 
         private static bool CheckInputFileLinesFormat(List<string> lines)
         {
-            // Checking input format before any conversions
+            // Checking input file format before any conversions
             foreach (string line in lines)
             {
                 try
@@ -103,6 +107,7 @@
 
         private static List<VentLine> ConvertLinesToVentLines(List<string> filteredInputLines)
         {
+            // Converting data to VentLine objects
             List<VentLine> outputVentLines = new List<VentLine>();
 
             foreach (string line in filteredInputLines)
@@ -127,6 +132,8 @@
 
         private static List<VentLine> FilterVentLinesByDirection(List<VentLine> ventLines)
         {
+            // Filtering vent lines by direction,
+            // skipping non vertical, horizontal and diagonal lines
             List<VentLine> filteredVentLines = new List<VentLine>();
 
             foreach (VentLine vl in ventLines)
