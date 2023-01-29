@@ -3,7 +3,7 @@
     public class Diagram
     {
         public int[,] Area { get; private set; }
-        public SortedDictionary<string, int> CrossroadPoints { get; private set; }
+        public Dictionary<string, int> CrossroadPoints { get; private set; }
 
         public Diagram(int[,] area)
         {
@@ -18,12 +18,12 @@
 
         public void UpdateCrossroadPoint(int coordX, int coordY)
         {
-            CrossroadPoints[$"({coordX}, {coordY})"]++;
+            CrossroadPoints[$"{coordX},{coordY}"]++;
         }
 
         public void SetCrossroadPoint(int coordX, int coordY)
         {
-            CrossroadPoints.Add($"({coordX}, {coordY})", Area[coordY, coordX]);
+            CrossroadPoints.Add($"{coordX},{coordY}", Area[coordY, coordX]);
         }
 
         public void Display()
@@ -56,9 +56,14 @@
         {
             Console.WriteLine($"Number of dangerous points: {CrossroadPoints.Count}\n");
 
-            foreach (KeyValuePair<string, int> crossroadPoint in CrossroadPoints)
+            foreach (KeyValuePair<string, int> crossroadPoint in CrossroadPoints
+                .OrderBy(x => int.Parse(x.Key.Split(",")[0]))
+                .ThenBy(x => int.Parse(x.Key.Split(",")[1])))
             {
-                Console.WriteLine($"{crossroadPoint.Key} -> {crossroadPoint.Value}");
+                Console.WriteLine(
+                    $"({crossroadPoint.Key.Split(",")[0]}, " +
+                    $"{crossroadPoint.Key.Split(",")[1]}) -> " +
+                    $"{crossroadPoint.Value}");
             }
 
             Console.ReadKey();

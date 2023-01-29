@@ -149,7 +149,7 @@ namespace Crossroad_Points_Reporter
 
         private static void RegisterCrossroadPoint(int coordX, int coordY, Diagram diagram)
         {
-            if (diagram.CrossroadPoints.ContainsKey($"({coordX}, {coordY})"))
+            if (diagram.CrossroadPoints.ContainsKey($"{coordX},{coordY}"))
             {
                 diagram.UpdateCrossroadPoint(coordX, coordY);
                 return;
