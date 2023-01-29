@@ -24,23 +24,14 @@
                 }
                 outputDiagram += "\n";
             }
-            Console.Write(outputDiagram + "\n");
+            Console.Write(outputDiagram + "\nPress any key to view results");
             Console.ReadKey();
         }
 
-        public static void CrossroadPoints(Dictionary<string, int> crossroadPoints)
+        public static void CrossroadPointsReport(string crossroadPointsReport)
         {
-            Console.WriteLine($"Number of dangerous points: {crossroadPoints.Count}\n");
-
-            foreach (KeyValuePair<string, int> crossroadPoint in crossroadPoints)
-            {
-                Console.WriteLine(
-                    $"({crossroadPoint.Key.Split(",")[0]}, " +
-                    $"{crossroadPoint.Key.Split(",")[1]}) -> " +
-                    $"{crossroadPoint.Value}");
-            }
-
-            Console.ReadKey();
+            Console.Clear();
+            Console.WriteLine(crossroadPointsReport);
         }
     }
 }

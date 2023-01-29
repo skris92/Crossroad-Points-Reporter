@@ -33,5 +33,20 @@
                 .ThenBy(x => int.Parse(x.Key.Split(",")[1]))
                 .ToDictionary(pair => pair.Key, pair => pair.Value);
         }
+
+        public string GetCrossroadPointsReport()
+        {
+            string result = $"Number of dangerous points: {CrossroadPoints.Count}\n";
+
+            foreach (KeyValuePair<string, int> crossroadPoint in CrossroadPoints)
+            {
+                result += 
+                    $"({crossroadPoint.Key.Split(",")[0]}, " +
+                    $"{crossroadPoint.Key.Split(",")[1]}) -> " +
+                    $"{crossroadPoint.Value}\n";
+            }
+
+            return result;
+        }
     }
 }

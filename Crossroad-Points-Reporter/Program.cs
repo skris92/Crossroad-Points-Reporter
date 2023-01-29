@@ -5,4 +5,6 @@ Diagram diagram = DiagramCreator.CreateDiagram();
 
 Display.Area(diagram.Area);
 
-Display.CrossroadPoints(diagram.CrossroadPoints);
+string crossroadPontsReport = diagram.GetCrossroadPointsReport();
+
+Display.CrossroadPointsReport(crossroadPontsReport);
