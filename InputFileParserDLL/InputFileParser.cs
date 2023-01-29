@@ -78,12 +78,14 @@
         private static bool CheckInputFileLinesFormat(List<string> lines)
         {
             // Checking input file format before any conversions
-            foreach (string line in lines)
+            for (int i = 0; i < lines.Count; i++)
             {
+                ShowProgressBar("Parsing input data", i, lines.Count);
+                //Thread.Sleep(10); // for progress bar visibility
                 try
                 {
-                    string[] startCoords = line.Split(" -> ")[0].Split(",");
-                    string[] endCoords = line.Split(" -> ")[1].Split(",");
+                    string[] startCoords = lines[i].Split(" -> ")[0].Split(",");
+                    string[] endCoords = lines[i].Split(" -> ")[1].Split(",");
 
                     if (!startCoords[0].All(char.IsDigit) ||
                         !startCoords[1].All(char.IsDigit) ||
@@ -103,6 +105,17 @@
             }
 
             return true;
+        }
+
+        private static void ShowProgressBar(string message, int iteration, int length)
+        {
+            int progressBarLength = 50;
+            float progressPercent = (iteration + 1) / (float)length * progressBarLength;
+
+            Console.SetCursorPosition(0, 0);
+            Console.Write($"{message}" +
+                          $"[{new string('#', (int)progressPercent)}" +
+                          $"{new string('-', progressBarLength - (int)progressPercent)}]\n");
         }
 
         private static List<VentLine> ConvertLinesToVentLines(List<string> filteredInputLines)
