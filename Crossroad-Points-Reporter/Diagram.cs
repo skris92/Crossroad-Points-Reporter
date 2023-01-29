@@ -36,17 +36,19 @@
 
         public string GetCrossroadPointsReport()
         {
-            string result = $"Number of dangerous points: {CrossroadPoints.Count}\n";
+            List<string> result = new();
+
+            result.Add($"Number of dangerous points: {CrossroadPoints.Count}\n");
 
             foreach (KeyValuePair<string, int> crossroadPoint in CrossroadPoints)
             {
-                result += 
+                result.Add( 
                     $"({crossroadPoint.Key.Split(",")[0]}, " +
                     $"{crossroadPoint.Key.Split(",")[1]}) -> " +
-                    $"{crossroadPoint.Value}\n";
+                    $"{crossroadPoint.Value}");
             }
 
-            return result;
+            return string.Join("\n", result);
         }
     }
 }
