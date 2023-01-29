@@ -16,14 +16,16 @@
             Area[coordY, coordX]++;
         }
 
-        public void UpdateCrossroadPoint(int coordX, int coordY)
-        {
-            CrossroadPoints[$"{coordX},{coordY}"]++;
-        }
-
         public void SetCrossroadPoint(int coordX, int coordY)
         {
-            CrossroadPoints.Add($"{coordX},{coordY}", Area[coordY, coordX]);
+            if (CrossroadPoints.ContainsKey($"{coordX},{coordY}"))
+            {
+                CrossroadPoints[$"{coordX},{coordY}"]++;
+            }
+            else
+            {
+                CrossroadPoints.Add($"{coordX},{coordY}", Area[coordY, coordX]);
+            }
         }
 
         public void SortCrossroadPointsByCoordinates()
