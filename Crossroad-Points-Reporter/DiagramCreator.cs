@@ -67,6 +67,7 @@ namespace Crossroad_Points_Reporter
                     DrawDiagonalVentLine(ventLine, diagram);
                 }
             }
+            diagram.SortCrossroadPointsByCoordinates();
         }
 
         private static void DrawVerticalVentLine(VentLine ventLine, Diagram diagram)

@@ -56,9 +56,7 @@
         {
             Console.WriteLine($"Number of dangerous points: {CrossroadPoints.Count}\n");
 
-            foreach (KeyValuePair<string, int> crossroadPoint in CrossroadPoints
-                .OrderBy(x => int.Parse(x.Key.Split(",")[0]))
-                .ThenBy(x => int.Parse(x.Key.Split(",")[1])))
+            foreach (KeyValuePair<string, int> crossroadPoint in CrossroadPoints)
             {
                 Console.WriteLine(
                     $"({crossroadPoint.Key.Split(",")[0]}, " +
@@ -67,6 +65,14 @@
             }
 
             Console.ReadKey();
+        }
+
+        public void SortCrossroadPointsByCoordinates()
+        {
+            CrossroadPoints = CrossroadPoints
+                .OrderBy(x => int.Parse(x.Key.Split(",")[0]))
+                .ThenBy(x => int.Parse(x.Key.Split(",")[1]))
+                .ToDictionary(pair => pair.Key, pair => pair.Value);
         }
     }
 }
