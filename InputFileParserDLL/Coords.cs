@@ -1,4 +1,4 @@
-﻿namespace InputFileParserClassLibrary
+﻿namespace InputFileParserDLL
 {
     public class Coords
     {
