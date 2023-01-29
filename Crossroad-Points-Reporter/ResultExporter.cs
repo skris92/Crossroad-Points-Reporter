@@ -21,7 +21,9 @@
 
             File.WriteAllText(fileName, result, System.Text.Encoding.UTF8);
 
-            Console.Write($"Result exported to:\n{fileName}");
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write($"Result exported to:\n{fileName}\n");
+            Console.ForegroundColor = ConsoleColor.White;
         }
 
         private static string GetFileName()
