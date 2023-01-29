@@ -17,7 +17,7 @@
 
         public static void Export(string directoryPath, string result)
         {
-            string fileName = directoryPath + GetFileName() + GetFileExtension();
+            string fileName = directoryPath + GetFileName();
 
             File.WriteAllText(fileName, result, System.Text.Encoding.UTF8);
 
@@ -30,25 +30,14 @@
         {
             string? fileName = "";
 
-            while (fileName == "" || fileName == null)
+            while (fileName.Length < 5 ||
+                   fileName.Substring(fileName.Length - 4) != ".txt" &&
+                   fileName.Substring(fileName.Length - 4) != ".ans")
             {
-                Console.WriteLine("Enter file name: ");
+                Console.WriteLine("Enter file name with extensions \".txt\" or \".ans\": ");
                 fileName = Console.ReadLine();
             }
             return fileName;
-        }
-
-        private static string GetFileExtension()
-        {
-            string fileExtension = "";
-
-            while (fileExtension == "")
-            {
-                Console.WriteLine("Enter file extension \"txt\" or \"ans\": ");
-                string? chosenExtension = Console.ReadLine();
-                if (chosenExtension == "txt" || chosenExtension == "ans") fileExtension += chosenExtension;
-            }
-            return "." + fileExtension;
         }
     }
 }
