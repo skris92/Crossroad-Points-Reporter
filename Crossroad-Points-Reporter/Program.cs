@@ -9,7 +9,7 @@ List<VentLine> ventLines = InputFileParser.GetVentLines();
 Diagram diagram = DiagramCreator.CreateDiagram(ventLines);
 
 // Visualizing diagram
-Display.Diagram(diagram.Area);
+//Display.Diagram(diagram.Area); -- I misunderstood the task, it wasn't a requirement
 
 // Visualizing result
 string result = diagram.GetCrossroadPointsReport();
