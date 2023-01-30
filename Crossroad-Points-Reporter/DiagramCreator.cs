@@ -1,6 +1,4 @@
-﻿using InputFileParserDLL;
-
-namespace Crossroad_Points_Reporter
+﻿namespace Crossroad_Points_Reporter
 {
     public static class DiagramCreator
     {
@@ -15,6 +13,7 @@ namespace Crossroad_Points_Reporter
 
         private static Dictionary<string, int> CalculateAreaSize(List<VentLine> ventLines)
         {
+            // Calculating area size based on dimensions max length
             Dictionary<string, int> areaSize = new Dictionary<string, int>();
 
             int maxWidth = 0;
@@ -37,9 +36,9 @@ namespace Crossroad_Points_Reporter
 
         private static Diagram InitializeDiagram(List<VentLine> ventLines)
         {
+            // Initializing area size
             Dictionary<string, int> area = CalculateAreaSize(ventLines);
 
-            // initializing _area size
             return new Diagram(new int[area["Height"], area["Width"]]);
         }
 
@@ -65,7 +64,6 @@ namespace Crossroad_Points_Reporter
                     DrawDiagonalVentLine(ventLine, diagram);
                 }
             }
-            diagram.SortCrossroadPointsByCoordinates();
         }
 
         private static void DrawVerticalVentLine(VentLine ventLine, Diagram diagram)
