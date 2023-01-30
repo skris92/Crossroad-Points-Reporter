@@ -40,7 +40,7 @@
             // Asking for user input something with correct extension entered
             while (true)
             {
-                Console.WriteLine("Enter file path: (Enter \"Q\" to quit)");
+                Console.WriteLine("Enter input file path: (Enter \"Q\" to quit)");
                 string? input = Console.ReadLine();
 
                 if (input == null || input == "")
