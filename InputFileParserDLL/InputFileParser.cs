@@ -37,7 +37,7 @@
 
         private static string GetFilePath()
         {
-            // Validating user input and file extension
+            // Asking for user input something with correct extension entered
             while (true)
             {
                 Console.WriteLine("Enter file path: (Enter \"Q\" to quit)");

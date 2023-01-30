@@ -2,14 +2,14 @@
 {
     public static class RawDataConverter
     {
+        // Converting data to VentLine objects
         public static List<VentLine> ConvertRawDataToVentLines(List<string> rawData)
         {
-            // Converting data to VentLine objects
             List<VentLine> outputVentLines = new List<VentLine>();
 
             foreach (string line in rawData)
             {
-                // Converting string numbers to integers
+                // Converting string coordinates to integers
                 int startCoordX = int.Parse(line.Split(" -> ")[0].Split(',')[0]);
                 int startCoordY = int.Parse(line.Split(" -> ")[0].Split(',')[1]);
 
@@ -31,7 +31,7 @@
 
         private static List<VentLine> FilterVentLinesByDirection(List<VentLine> ventLines)
         {
-            // Filtering vent lines by direction,
+            // Filtering VentLines by direction,
             // skipping non vertical, horizontal and diagonal lines
             List<VentLine> filteredVentLines = new List<VentLine>();
 

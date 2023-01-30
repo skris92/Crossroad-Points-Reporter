@@ -39,7 +39,7 @@
 
         private static void ShowProgressBar(string message, int iteration, int areaLength)
         {
-            int progressBarLength = 50;
+            int progressBarLength = 50; // Adjust this value to manipulate bar length
             float progressPercent = (iteration + 1) / (float)areaLength * progressBarLength;
 
             Console.SetCursorPosition(0, 0);

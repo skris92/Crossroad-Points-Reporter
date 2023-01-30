@@ -4,6 +4,7 @@
     {
         public static bool UserWantsToExport()
         {
+            // Asking for user input until option export or quit selected
             string? chosenOption = "";
 
             while (chosenOption != "E" && chosenOption != "e")
@@ -29,6 +30,7 @@
 
         private static string GetFileName()
         {
+            // Getting file name with at least one character long and with extensions: "txt" and "ans"
             string? fileName = "";
 
             while (fileName.Length < 5 ||
