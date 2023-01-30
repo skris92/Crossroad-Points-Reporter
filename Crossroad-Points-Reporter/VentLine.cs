@@ -1,4 +1,4 @@
-﻿namespace InputFileParserDLL
+﻿namespace Crossroad_Points_Reporter
 {
     public class VentLine
     {

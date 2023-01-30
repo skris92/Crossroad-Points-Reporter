@@ -2,8 +2,8 @@
 {
     public static class InputFileParser
     {
-        public static string DirectoryPath { get; private set; } // Used for future exporting
-        public static List<VentLine> GetVentLines()
+        public static string? DirectoryPath { get; private set; }
+        public static List<string> GetRawData()
         {
             bool correctLinesFormat = false;
             List<string> inputFileLines = new();
@@ -12,7 +12,7 @@
             while (!correctLinesFormat)
             {
                 string filePath = GetFilePath();
-                DirectoryPath = Path.GetDirectoryName(filePath) + "\\";
+                DirectoryPath = Path.GetDirectoryName(filePath);
 
                 try
                 {
@@ -32,11 +32,7 @@
                 correctLinesFormat = CheckInputFileLinesFormat(inputFileLines);
             }
 
-            List<VentLine> ventLines = ConvertLinesToVentLines(inputFileLines);
-
-            List<VentLine> filteredVentLines = FilterVentLinesByDirection(ventLines);
-
-            return filteredVentLines;
+            return inputFileLines;
         }
 
         private static string GetFilePath()
@@ -116,50 +112,6 @@
             Console.Write($"{message}" +
                           $"[{new string('#', (int)progressPercent)}" +
                           $"{new string('-', progressBarLength - (int)progressPercent)}]\n");
-        }
-
-        private static List<VentLine> ConvertLinesToVentLines(List<string> filteredInputLines)
-        {
-            // Converting data to VentLine objects
-            List<VentLine> outputVentLines = new List<VentLine>();
-
-            foreach (string line in filteredInputLines)
-            {
-                // Converting string numbers to integers
-                int startCoordX = int.Parse(line.Split(" -> ")[0].Split(',')[0]);
-                int startCoordY = int.Parse(line.Split(" -> ")[0].Split(',')[1]);
-
-                int endCoordX = int.Parse(line.Split(" -> ")[1].Split(',')[0]);
-                int endCoordY = int.Parse(line.Split(" -> ")[1].Split(',')[1]);
-
-                Coords startCoords = new(startCoordX, startCoordY);
-                Coords endCoords = new(endCoordX, endCoordY);
-
-                VentLine ventLine = new(startCoords, endCoords);
-
-                outputVentLines.Add(ventLine);
-            }
-
-            return outputVentLines;
-        }
-
-        private static List<VentLine> FilterVentLinesByDirection(List<VentLine> ventLines)
-        {
-            // Filtering vent lines by direction,
-            // skipping non vertical, horizontal and diagonal lines
-            List<VentLine> filteredVentLines = new List<VentLine>();
-
-            foreach (VentLine vl in ventLines)
-            {
-                if (vl.StartCoords.X == vl.EndCoords.X && vl.StartCoords.Y != vl.EndCoords.Y || // vertical
-                    vl.StartCoords.Y == vl.EndCoords.Y && vl.StartCoords.X != vl.EndCoords.X || // horizontal
-                    Math.Abs(vl.StartCoords.X - vl.EndCoords.X) == Math.Abs(vl.StartCoords.Y - vl.EndCoords.Y)) // diagonal
-                {
-                    filteredVentLines.Add(vl);
-                }
-            }
-
-            return filteredVentLines;
         }
 
         private static void ClearConsole()
