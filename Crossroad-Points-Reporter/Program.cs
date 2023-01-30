@@ -1,5 +1,4 @@
-﻿// See https://aka.ms/new-console-template for more information
-using Crossroad_Points_Reporter;
+﻿using Crossroad_Points_Reporter;
 using InputFileParserDLL;
 
 // Program runs until any of the user inputs is "Q" or "q"
@@ -25,6 +24,5 @@ while (true)
     if (ResultExporter.UserWantsToExport() && InputFileParser.DirectoryPath != null)
     {
         ResultExporter.Export(InputFileParser.DirectoryPath, result);
-
     }
 }
