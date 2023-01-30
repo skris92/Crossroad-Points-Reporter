@@ -2,7 +2,6 @@
 {
     public static class InputFileParser
     {
-        public static string? DirectoryPath { get; private set; }
         public static List<string> GetRawData()
         {
             bool correctLinesFormat = false;
@@ -12,7 +11,6 @@
             while (!correctLinesFormat)
             {
                 string filePath = GetFilePath();
-                DirectoryPath = Path.GetDirectoryName(filePath);
 
                 try
                 {
