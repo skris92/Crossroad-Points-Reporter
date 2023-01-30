@@ -20,9 +20,9 @@ while (true)
     string result = diagram.GetCrossroadPointsReport();
     Display.Result(result);
 
-    // Exporting result to the same directory as the input file
-    if (ResultExporter.UserWantsToExport() && InputFileParser.DirectoryPath != null)
+    // Exporting result
+    if (ResultExporter.UserWantsToExport())
     {
-        ResultExporter.Export(InputFileParser.DirectoryPath, result);
+        ResultExporter.Export(result);
     }
 }

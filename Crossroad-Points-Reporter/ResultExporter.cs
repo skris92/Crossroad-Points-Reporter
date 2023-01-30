@@ -17,13 +17,13 @@
             return false;
         }
 
-        public static void Export(string directoryPath, string result)
+        public static void Export(string result)
         {
             bool askingFileName = true;
 
             while (askingFileName)
             {
-                string fileName = directoryPath + "\\" + GetFileName();
+                string fileName = GetDirectoryPath() + GetFileName();
 
                 if (File.Exists(fileName))
                 {
@@ -67,12 +67,37 @@
             Console.ForegroundColor = ConsoleColor.White;
         }
 
+        private static string GetDirectoryPath()
+        {
+            // Getting existing directory path
+            string? filePath = "";
+            bool existingDirectory = false;
+
+            while (filePath == null || !existingDirectory)
+            {
+                Console.WriteLine("Enter export directory path: (Enter \"Q\" to quit)");
+                filePath = Console.ReadLine();
+                if (filePath == "Q" || filePath == "q") Environment.Exit(0);
+                else if (filePath == "" || filePath == null) continue;
+                else if (!Directory.Exists(filePath))
+                {
+                    Console.WriteLine("Directory not found!");
+                }
+                else existingDirectory = true;
+            }
+
+            // Adding a "\" at the end of the path if it is not already there
+            filePath += filePath[filePath.Length - 1] == '\\' ? "" : "\\";
+
+            return filePath;
+        }
+
         private static string GetFileName()
         {
             // Getting file name with at least one character long and with extensions: "txt" and "ans"
-            string? fileName = "";
+            string fileName = "";
 
-            while (fileName.Length < 5 ||
+            while (fileName == null || fileName.Length < 5 ||
                    fileName.Substring(fileName.Length - 4) != ".txt" &&
                    fileName.Substring(fileName.Length - 4) != ".ans")
             {
