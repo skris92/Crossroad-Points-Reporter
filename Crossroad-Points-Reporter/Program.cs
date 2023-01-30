@@ -5,21 +5,24 @@ using InputFileParserDLL;
 // Program runs until any of the user inputs is "Q" or "q"
 while (true)
 {
-    // Validating input format and converting data to VentLine objects
-    List<VentLine> ventLines = InputFileParser.GetVentLines();
+    // Getting raw data after validating input format
+    List<string> rawData = InputFileParser.GetRawData();
+
+    // Converting raw data to relevant VentLine objects
+    List<VentLine> ventLines = RawDataConverter.ConvertRawDataToVentLines(rawData);
 
     // Creating Diagram object from VentLine objects
     Diagram diagram = DiagramCreator.CreateDiagram(ventLines);
 
     // Visualizing diagram
-    //Display.Diagram(diagram.Area); -- I misunderstood the task, it wasn't a requirement
+    //Display.Diagram(diagram.Area); // Maybe I misunderstood the task, I assume it wasn't a requirement
 
     // Visualizing result
     string result = diagram.GetCrossroadPointsReport();
     Display.Result(result);
 
-    // Exporting result
-    if (ResultExporter.UserWantsToExport())
+    // Exporting result to the same directory as the input file
+    if (ResultExporter.UserWantsToExport() && InputFileParser.DirectoryPath != null)
     {
         ResultExporter.Export(InputFileParser.DirectoryPath, result);
 
