@@ -18,7 +18,7 @@
 
         public static void Export(string directoryPath, string result)
         {
-            string fileName = directoryPath + GetFileName();
+            string fileName = directoryPath + "\\" + GetFileName();
 
             File.WriteAllText(fileName, result, System.Text.Encoding.UTF8);
 
