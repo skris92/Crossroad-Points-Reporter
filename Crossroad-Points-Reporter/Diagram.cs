@@ -13,12 +13,13 @@
 
         public void SetAreaPoint(int coordX, int coordY)
         {
+            // Incrementing area point value
             Area[coordY, coordX]++;
         }
 
         public void SetCrossroadPoint(int coordX, int coordY)
         {
-            if (CrossroadPoints.ContainsKey($"{coordX},{coordY}"))
+            if (CrossroadPoints.ContainsKey($"{coordX},{coordY}")) // Update existing crossroad point
             {
                 CrossroadPoints[$"{coordX},{coordY}"]++;
             }
@@ -28,8 +29,9 @@
             }
         }
 
-        public void SortCrossroadPointsByCoordinates()
+        private void SortCrossroadPointsByCoordinates()
         {
+            // Sorting crossroad points by coordinate X and after by Y
             CrossroadPoints = CrossroadPoints
                 .OrderBy(x => int.Parse(x.Key.Split(",")[0]))
                 .ThenBy(x => int.Parse(x.Key.Split(",")[1]))
@@ -39,6 +41,7 @@
         public string GetCrossroadPointsReport()
         {
             List<string> result = new();
+            SortCrossroadPointsByCoordinates();
 
             result.Add($"Number of dangerous points: {CrossroadPoints.Count}\n");
 
