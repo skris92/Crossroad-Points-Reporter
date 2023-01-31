@@ -95,7 +95,7 @@
 
         private static string GetFileName()
         {
-            // Getting file name with at least one character long and with extensions: "txt" and "ans"
+            // Getting file name with at least one character long and with extensions: ".txt" and ".ans"
             string fileName = "";
 
             while (fileName == null || fileName.Length < 5 ||
