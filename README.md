@@ -11,4 +11,4 @@ A console application reporting dangerous hydrothermal vent crossroad points bas
 - On the top toolbar select: Build -> Configuration Manager...
 - Set Active solution configuration to "Release" in the Active solution configuration dropdown menu and close the Configuration Manager window.
 - On the top toolbar select: Build -> Build solution
-- Run file  Crossroad-Points-Reporter\bin\Release\net6\Crossroad-Points-Reporter.exe.
+- Run file  Crossroad-Points-Reporter\bin\Release\net6.0\Crossroad-Points-Reporter.exe.
