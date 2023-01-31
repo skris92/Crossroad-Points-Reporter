@@ -65,6 +65,7 @@
             Console.ForegroundColor = ConsoleColor.Green;
             Console.Write($"Result exported to:\n{fileName}\n");
             Console.ForegroundColor = ConsoleColor.White;
+            Console.ReadKey();
         }
 
         private static string GetDirectoryPath()
