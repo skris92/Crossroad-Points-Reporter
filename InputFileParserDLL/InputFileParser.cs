@@ -2,7 +2,9 @@
 {
     public static class InputFileParser
     {
-        public static List<string> GetRawData()
+        private static CancellationTokenSource cTokenSource = new CancellationTokenSource();
+
+        public async static Task<List<string>> GetRawData()
         {
             bool correctLinesFormat = false;
             List<string> inputFileLines = new();
@@ -27,7 +29,22 @@
                     continue;
                 }
 
-                correctLinesFormat = CheckInputFileLinesFormat(inputFileLines);
+                // Aborting task for CheckInputFileLinesFormatTask
+                Task abortTask = Task.Run(() =>
+                {
+                    if (Console.ReadKey(true).Key == ConsoleKey.A)
+                    {
+                        Console.WriteLine("\nParsing aborted!\n");
+                        cTokenSource.Cancel();
+                    }
+                });
+
+                Task CheckInputFileLinesFormatTask = Task.Run(() =>
+                {
+                    correctLinesFormat = CheckInputFileLinesFormat(inputFileLines);
+                });
+
+                await Task.WhenAny(new[] { abortTask, CheckInputFileLinesFormatTask });
             }
 
             return inputFileLines;
@@ -71,11 +88,17 @@
 
         private static bool CheckInputFileLinesFormat(List<string> lines)
         {
-            // Checking input file format before any conversions
             for (int i = 0; i < lines.Count; i++)
             {
-                ShowProgressBar("Parsing input data", i, lines.Count);
-                //Thread.Sleep(10); // for progress bar visibility
+                if (cTokenSource.IsCancellationRequested)
+                {
+                    // Resetting CancellationTokenSource for letting the user to add a new input file
+                    cTokenSource = new CancellationTokenSource();
+                    return false;
+                }
+                ShowProgressBar("Parsing input data (Press \"A\" to abort)", i, lines.Count);
+                //Thread.Sleep(10); // Slowing down the process for progress bar visibility
+                // Checking input file format before any conversions
                 try
                 {
                     string[] startCoords = lines[i].Split(" -> ")[0].Split(",");
