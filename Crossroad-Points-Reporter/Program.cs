@@ -2,7 +2,7 @@
 using InputFileParserDLL;
 
 // Getting raw data after validating input format
-List<string> rawData = InputFileParser.GetRawData();
+List<string> rawData = await InputFileParser.GetRawData();
 
 // Converting raw data to relevant VentLine objects
 List<VentLine> ventLines = RawDataConverter.ConvertRawDataToVentLines(rawData);
